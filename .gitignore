@@ -33,6 +33,6 @@ report.[0-9]_.[0-9]_.[0-9]_.[0-9]_.json
 # Finder (MacOS) folder config
 .DS_Store
 
-# TicketSync runtime files
-.ticketsync-state.json
-tickets.csv
+# TicketSync runtime files (tracked in repo for GitHub Actions state persistence)
+# .ticketsync-state.json
+# tickets.csv

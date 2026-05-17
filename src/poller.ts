@@ -5,7 +5,7 @@ import { createTicketPR } from "./github.ts";
 import { sendDoneNotification } from "./email.ts";
 import { getLastPolledAt, getProcessedKeys, markProcessed } from "./state.ts";
 
-async function poll(): Promise<void> {
+export async function poll(): Promise<void> {
   const polledAt = new Date();
   const since = await getLastPolledAt();
   const processed = await getProcessedKeys();
