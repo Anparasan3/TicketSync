@@ -3,13 +3,19 @@ name: TicketSync Poll
 on:
   schedule:
     - cron: '0 9,21 * * *'  # twice daily at 09:00 and 21:00 UTC
-  workflow_dispatch:          # allow manual trigger
+  workflow_dispatch:
+    inputs:
+      direct_push:
+        description: 'Push directly to master instead of raising a PR'
+        type: boolean
+        default: false
 
 jobs:
   poll:
     runs-on: ubuntu-latest
     permissions:
-      contents: write  # needed to commit state back
+      contents: write
+      pull-requests: write
 
     steps:
       - uses: actions/checkout@v4
@@ -37,9 +43,28 @@ jobs:
           EMAIL_TO: ${{ secrets.EMAIL_TO }}
 
       - name: Commit updated state
+        env:
+          GH_TOKEN: ${{ secrets.GH_TOKEN }}
+          DIRECT_PUSH: ${{ github.event.inputs.direct_push }}
         run: |
           git config user.name "github-actions[bot]"
           git config user.email "github-actions[bot]@users.noreply.github.com"
           git add .ticketsync-state.json tickets.csv
-          git diff --staged --quiet || git commit -m "chore: ticketsync state update [skip ci]"
-          git push
+          if git diff --staged --quiet; then
+            echo "No changes — skipping"
+            exit 0
+          fi
+          if [ "$DIRECT_PUSH" = "true" ]; then
+            git commit -m "chore: ticketsync state update [skip ci]"
+            git push origin master
+          else
+            BRANCH="ticketsync/state-$(date +%Y%m%d-%H%M%S)"
+            git checkout -b "$BRANCH"
+            git commit -m "chore: ticketsync state update"
+            git push origin "$BRANCH"
+            gh pr create \
+              --title "chore: ticketsync state update" \
+              --body "Automated CSV and state update from TicketSync poll." \
+              --base master \
+              --head "$BRANCH"
+          fi
