@@ -1,4 +1,4 @@
-import { readState } from "./read-state.ts";
+import { readState } from "./readState.ts";
 
 export async function getProcessedKeys(): Promise<Set<string>> {
   const state = await readState();

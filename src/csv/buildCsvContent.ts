@@ -1,6 +1,6 @@
-import type { JiraTicket } from "../jira/jira-ticket.ts";
+import type { JiraTicket } from "../jira/jiraTicket.ts";
 import { HEADERS } from "./headers.ts";
-import { ticketToRow } from "./ticket-to-row.ts";
+import { ticketToRow } from "./ticketToRow.ts";
 
 export function buildCsvContent(existingContent: string, tickets: JiraTicket[]): string {
   const headerLine = HEADERS.join(",");

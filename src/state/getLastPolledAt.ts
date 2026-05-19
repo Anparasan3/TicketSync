@@ -1,4 +1,4 @@
-import { readState } from "./read-state.ts";
+import { readState } from "./readState.ts";
 
 export async function getLastPolledAt(): Promise<Date> {
   const state = await readState();

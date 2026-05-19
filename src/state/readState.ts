@@ -1,6 +1,6 @@
 import { existsSync } from "fs";
-import { STATE_FILE, stateSchema } from "./state-schema.ts";
-import type { State } from "./state-schema.ts";
+import { STATE_FILE, stateSchema } from "./stateSchema.ts";
+import type { State } from "./stateSchema.ts";
 
 export async function readState(): Promise<State> {
   if (!existsSync(STATE_FILE)) {

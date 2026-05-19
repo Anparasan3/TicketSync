@@ -1,8 +1,8 @@
 import { z } from "zod";
 import { config } from "../config.ts";
-import { jiraFetch } from "./jira-client.ts";
-import type { JiraIssueRaw, JiraTicket } from "./jira-ticket.ts";
-import { mapIssue } from "./map-issue.ts";
+import { jiraFetch } from "./jiraClient.ts";
+import type { JiraIssueRaw, JiraTicket } from "./jiraTicket.ts";
+import { mapIssue } from "./mapIssue.ts";
 
 const jiraIssueRawSchema = z.object({
   key: z.string(),

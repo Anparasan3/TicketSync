@@ -1,7 +1,7 @@
 import { Resend } from "resend";
 import { config } from "../config.ts";
-import type { JiraTicket } from "../jira/jira-ticket.ts";
-import { buildHtml } from "./build-html.ts";
+import type { JiraTicket } from "../jira/jiraTicket.ts";
+import { buildHtml } from "./buildHtml.ts";
 
 const resend = new Resend(config.RESEND_API_KEY);
 

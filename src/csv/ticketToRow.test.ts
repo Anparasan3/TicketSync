@@ -1,6 +1,6 @@
 import { describe, expect, test } from "bun:test";
-import type { JiraTicket } from "../jira/jira-ticket.ts";
-import { ticketToRow } from "./ticket-to-row.ts";
+import type { JiraTicket } from "../jira/jiraTicket.ts";
+import { ticketToRow } from "./ticketToRow.ts";
 
 const baseTicket: JiraTicket = {
   key: "PROJ-1",

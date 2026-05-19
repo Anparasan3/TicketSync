@@ -1,6 +1,6 @@
 import { describe, expect, test } from "bun:test";
-import type { JiraTicket } from "../jira/jira-ticket.ts";
-import { buildCsvContent } from "./build-csv-content.ts";
+import type { JiraTicket } from "../jira/jiraTicket.ts";
+import { buildCsvContent } from "./buildCsvContent.ts";
 
 const HEADER = "Key,Summary,Status,Issue Type,Priority,Assignee,Reporter,Sprint,Labels,Fix Versions,Resolution Date,Created,Updated,URL";
 

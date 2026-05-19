@@ -1,5 +1,5 @@
 import { format } from "date-fns";
-import type { JiraTicket } from "../jira/jira-ticket.ts";
+import type { JiraTicket } from "../jira/jiraTicket.ts";
 
 export function buildPrBody(tickets: JiraTicket[]): string {
   const rows = tickets

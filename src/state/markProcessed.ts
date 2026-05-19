@@ -1,5 +1,5 @@
-import { readState } from "./read-state.ts";
-import { writeState } from "./write-state.ts";
+import { readState } from "./readState.ts";
+import { writeState } from "./writeState.ts";
 
 export async function markProcessed(keys: string[], polledAt: Date): Promise<void> {
   const state = await readState();
