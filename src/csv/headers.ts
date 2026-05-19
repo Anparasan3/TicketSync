@@ -1,0 +1,16 @@
+export const HEADERS = [
+  "Key",
+  "Summary",
+  "Status",
+  "Issue Type",
+  "Priority",
+  "Assignee",
+  "Reporter",
+  "Sprint",
+  "Labels",
+  "Fix Versions",
+  "Resolution Date",
+  "Created",
+  "Updated",
+  "URL",
+];

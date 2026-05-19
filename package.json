@@ -5,7 +5,9 @@
   "scripts": {
     "start": "bun run index.ts",
     "dev": "bun --watch index.ts",
-    "poll": "bun run src/run-once.ts"
+    "poll": "bun run src/run-once.ts",
+    "typecheck": "bunx tsc --noEmit",
+    "test": "bun test"
   },
   "devDependencies": {
     "@types/bun": "latest"
@@ -14,6 +16,7 @@
     "typescript": "^5"
   },
   "dependencies": {
+    "date-fns": "^4.2.1",
     "resend": "^6.12.3",
     "zod": "^4.4.3"
   }
