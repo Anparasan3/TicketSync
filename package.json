@@ -10,7 +10,8 @@
     "test": "bun test"
   },
   "devDependencies": {
-    "@types/bun": "latest"
+    "@types/bun": "latest",
+    "oxfmt": "^0.51.0"
   },
   "peerDependencies": {
     "typescript": "^5"
