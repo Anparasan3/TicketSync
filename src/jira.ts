@@ -63,7 +63,7 @@ async function jiraFetch(path: string, body?: unknown): Promise<unknown> {
 }
 
 export async function fetchDoneTicketsSince(since: Date): Promise<JiraTicket[]> {
-  const sinceStr = '2026-05-01 09:55' // since.toISOString().replace("T", " ").split(".")[0]?.split(":").slice(0, 2).join(":");
+  const sinceStr = since.toISOString().replace("T", " ").split(".")[0]?.split(":").slice(0, 2).join(":");
   // JQL: tickets in the project that moved to Done after `since`
   const jql = `project = "${config.JIRA_PROJECT_KEY}" AND status = Done AND statusCategoryChangedDate >= "${sinceStr}" AND assignee = currentUser() ORDER BY updated DESC`;
   const fields = [
