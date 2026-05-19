@@ -15,7 +15,7 @@ const jiraIssueRawSchema = z.object({
     priority: z.object({ name: z.string() }).nullable(),
     issuetype: z.object({ name: z.string() }),
     labels: z.array(z.string()),
-    fixVersions: z.array(z.object({ name: z.string() })),
+    fixVersions: z.array(z.object({ name: z.string() })).optional().default([]),
     customfield_10020: z
       .array(z.object({ name: z.string().optional(), title: z.string().optional() }))
       .nullable()
@@ -23,7 +23,7 @@ const jiraIssueRawSchema = z.object({
     resolutiondate: z.string().nullable(),
     created: z.string(),
     updated: z.string(),
-    description: z.string().nullable(),
+    description: z.unknown(),
   }),
 }) satisfies z.ZodType<JiraIssueRaw>;
 

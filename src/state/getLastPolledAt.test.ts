@@ -5,9 +5,12 @@ import { STATE_FILE } from "./stateSchema.ts";
 
 describe("getLastPolledAt", () => {
   let savedContent: string | null = null;
+  let savedPollSince: string | undefined;
 
   beforeEach(async () => {
     savedContent = existsSync(STATE_FILE) ? await Bun.file(STATE_FILE).text() : null;
+    savedPollSince = process.env["POLL_SINCE"];
+    delete process.env["POLL_SINCE"];
   });
 
   afterEach(async () => {
@@ -15,6 +18,11 @@ describe("getLastPolledAt", () => {
       await Bun.write(STATE_FILE, savedContent);
     } else if (existsSync(STATE_FILE)) {
       unlinkSync(STATE_FILE);
+    }
+    if (savedPollSince !== undefined) {
+      process.env["POLL_SINCE"] = savedPollSince;
+    } else {
+      delete process.env["POLL_SINCE"];
     }
   });
 
