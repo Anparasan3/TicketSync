@@ -1,3 +1,4 @@
+import { format } from "date-fns";
 import { z } from "zod";
 import { config } from "../config.ts";
 import { jiraFetch } from "./jiraClient.ts";
@@ -32,13 +33,7 @@ const searchResponseSchema = z.object({
 });
 
 export async function fetchDoneTicketsSince(since: Date): Promise<JiraTicket[]> {
-  const sinceStr = since
-    .toISOString()
-    .replace("T", " ")
-    .split(".")[0]
-    ?.split(":")
-    .slice(0, 2)
-    .join(":");
+  const sinceStr = format(since, "yyyy-MM-dd HH:mm");
 
   const jql = `project = "${config.JIRA_PROJECT_KEY}" AND status = Done AND statusCategoryChangedDate >= "${sinceStr}" AND assignee = currentUser() ORDER BY updated DESC`;
 

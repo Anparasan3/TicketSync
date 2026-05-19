@@ -1,7 +1,7 @@
+import { format } from "date-fns";
 import { config } from "./config.ts";
 import { buildCsvContent } from "./csv/buildCsvContent.ts";
-import { readLocalCsv } from "./csv/readLocalCsv.ts";
-import { writeLocalCsv } from "./csv/writeLocalCsv.ts";
+import { readLocalCsv, writeLocalCsv } from "./csv/csvIO.ts";
 import { sendDoneNotification } from "./email/sendDoneNotification.ts";
 import { createTicketPR } from "./github/createTicketPr.ts";
 import { fetchDoneTicketsSince } from "./jira/fetchDoneTicketsSince.ts";
@@ -14,7 +14,7 @@ export async function poll(): Promise<void> {
   const since = await getLastPolledAt();
   const processed = await getProcessedKeys();
 
-  console.log(`[${polledAt.toISOString()}] Polling Jira for tickets done since ${since.toISOString()}`);
+  console.log(`[${format(polledAt, "yyyy-MM-dd HH:mm:ss")}] Polling Jira for tickets done since ${format(since, "yyyy-MM-dd HH:mm:ss")}`);
 
   let tickets = await fetchDoneTicketsSince(since);
   tickets = tickets.filter((t) => !processed.has(t.key));
