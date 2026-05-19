@@ -31,6 +31,6 @@ export interface JiraIssueRaw {
     resolutiondate: string | null;
     created: string;
     updated: string;
-    description: string | null;
+    description: unknown;
   };
 }

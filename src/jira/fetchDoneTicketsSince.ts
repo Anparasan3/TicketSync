@@ -1,8 +1,9 @@
+import { format } from "date-fns";
 import { z } from "zod";
 import { config } from "../config.ts";
-import { jiraFetch } from "./jira-client.ts";
-import type { JiraIssueRaw, JiraTicket } from "./jira-ticket.ts";
-import { mapIssue } from "./map-issue.ts";
+import { jiraFetch } from "./jiraClient.ts";
+import type { JiraIssueRaw, JiraTicket } from "./jiraTicket.ts";
+import { mapIssue } from "./mapIssue.ts";
 
 const jiraIssueRawSchema = z.object({
   key: z.string(),
@@ -14,7 +15,7 @@ const jiraIssueRawSchema = z.object({
     priority: z.object({ name: z.string() }).nullable(),
     issuetype: z.object({ name: z.string() }),
     labels: z.array(z.string()),
-    fixVersions: z.array(z.object({ name: z.string() })),
+    fixVersions: z.array(z.object({ name: z.string() })).optional().default([]),
     customfield_10020: z
       .array(z.object({ name: z.string().optional(), title: z.string().optional() }))
       .nullable()
@@ -22,7 +23,7 @@ const jiraIssueRawSchema = z.object({
     resolutiondate: z.string().nullable(),
     created: z.string(),
     updated: z.string(),
-    description: z.string().nullable(),
+    description: z.unknown(),
   }),
 }) satisfies z.ZodType<JiraIssueRaw>;
 
@@ -32,13 +33,7 @@ const searchResponseSchema = z.object({
 });
 
 export async function fetchDoneTicketsSince(since: Date): Promise<JiraTicket[]> {
-  const sinceStr = since
-    .toISOString()
-    .replace("T", " ")
-    .split(".")[0]
-    ?.split(":")
-    .slice(0, 2)
-    .join(":");
+  const sinceStr = format(since, "yyyy-MM-dd HH:mm");
 
   const jql = `project = "${config.JIRA_PROJECT_KEY}" AND status = Done AND statusCategoryChangedDate >= "${sinceStr}" AND assignee = currentUser() ORDER BY updated DESC`;
 

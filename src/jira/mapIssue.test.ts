@@ -1,6 +1,6 @@
 import { describe, expect, test } from "bun:test";
-import type { JiraIssueRaw } from "./jira-ticket.ts";
-import { mapIssue } from "./map-issue.ts";
+import type { JiraIssueRaw } from "./jiraTicket.ts";
+import { mapIssue } from "./mapIssue.ts";
 
 const BASE_URL = "https://jira.example.com";
 

@@ -13,6 +13,9 @@ const schema = z.object({
     .optional()
     .transform((v) => (v ? parseInt(v, 10) : 300_000)),
 
+  // Optional: override the "poll since" date for manual testing (ISO 8601, e.g. 2026-05-08T23:09:11Z)
+  POLL_SINCE: z.string().optional(),
+
   // CSV
   CSV_FILE_PATH: z.string().optional().default("tickets.csv"),
 

@@ -1,4 +1,4 @@
-import type { JiraTicket } from "../jira/jira-ticket.ts";
+import type { JiraTicket } from "../jira/jiraTicket.ts";
 import { escape } from "./escape.ts";
 
 export function ticketToRow(ticket: JiraTicket): string {

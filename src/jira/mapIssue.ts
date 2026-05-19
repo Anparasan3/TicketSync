@@ -1,4 +1,4 @@
-import type { JiraIssueRaw, JiraTicket } from "./jira-ticket.ts";
+import type { JiraIssueRaw, JiraTicket } from "./jiraTicket.ts";
 
 export function mapIssue(issue: JiraIssueRaw, jiraBaseUrl: string): JiraTicket {
   const f = issue.fields;

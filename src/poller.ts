@@ -1,20 +1,20 @@
+import { format } from "date-fns";
 import { config } from "./config.ts";
-import { buildCsvContent } from "./csv/build-csv-content.ts";
-import { readLocalCsv } from "./csv/read-local-csv.ts";
-import { writeLocalCsv } from "./csv/write-local-csv.ts";
-import { sendDoneNotification } from "./email/send-done-notification.ts";
-import { createTicketPR } from "./github/create-ticket-pr.ts";
-import { fetchDoneTicketsSince } from "./jira/fetch-done-tickets-since.ts";
-import { getLastPolledAt } from "./state/get-last-polled-at.ts";
-import { getProcessedKeys } from "./state/get-processed-keys.ts";
-import { markProcessed } from "./state/mark-processed.ts";
+import { buildCsvContent } from "./csv/buildCsvContent.ts";
+import { readLocalCsv, writeLocalCsv } from "./csv/csvIO.ts";
+import { sendDoneNotification } from "./email/sendDoneNotification.ts";
+import { createTicketPR } from "./github/createTicketPr.ts";
+import { fetchDoneTicketsSince } from "./jira/fetchDoneTicketsSince.ts";
+import { getLastPolledAt } from "./state/getLastPolledAt.ts";
+import { getProcessedKeys } from "./state/getProcessedKeys.ts";
+import { markProcessed } from "./state/markProcessed.ts";
 
 export async function poll(): Promise<void> {
   const polledAt = new Date();
   const since = await getLastPolledAt();
   const processed = await getProcessedKeys();
 
-  console.log(`[${polledAt.toISOString()}] Polling Jira for tickets done since ${since.toISOString()}`);
+  console.log(`[${format(polledAt, "yyyy-MM-dd HH:mm:ss")}] Polling Jira for tickets done since ${format(since, "yyyy-MM-dd HH:mm:ss")}`);
 
   let tickets = await fetchDoneTicketsSince(since);
   tickets = tickets.filter((t) => !processed.has(t.key));

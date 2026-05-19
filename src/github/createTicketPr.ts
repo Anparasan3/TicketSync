@@ -1,9 +1,9 @@
 import { format } from "date-fns";
 import { z } from "zod";
 import { config } from "../config.ts";
-import type { JiraTicket } from "../jira/jira-ticket.ts";
-import { buildPrBody } from "./build-pr-body.ts";
-import { ghFetch, ghFetchOptional } from "./gh-client.ts";
+import type { JiraTicket } from "../jira/jiraTicket.ts";
+import { buildPrBody } from "./buildPrBody.ts";
+import { ghFetch, ghFetchOptional } from "./ghClient.ts";
 
 const baseBranchSchema = z.object({ object: z.object({ sha: z.string() }) });
 const fileSchema = z.object({ sha: z.string() });
