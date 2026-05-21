@@ -1,1 +1,3 @@
 Key,Summary,Status,Issue Type,Priority,Assignee,Reporter,Sprint,Labels,Fix Versions,Resolution Date,Created,Updated,URL
+DEV-2579,Duplicate employee_id in employee_manifest caused payroll deduction to be applied to wrong customer,Done,Task,Medium,Anparasan,Ryan Cherrry,DEV: Sprint 2612,,,2026-05-21T07:05:49.287-0500,2026-04-27T17:26:20.779-0500,2026-05-21T07:05:49.983-0500,https://benefitsme.atlassian.net/browse/DEV-2579
+DEV-2594,[account] klaviyo profile id not always associated with customer,Done,Task,Medium,Anparasan,Andy Edinborough,DEV: Sprint 2614,,,2026-05-21T00:19:16.232-0500,2026-04-29T14:19:23.017-0500,2026-05-21T00:19:17.025-0500,https://benefitsme.atlassian.net/browse/DEV-2594
