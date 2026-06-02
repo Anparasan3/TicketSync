@@ -4,11 +4,6 @@ on:
   schedule:
     - cron: '0 9,21 * * *'  # twice daily at 09:00 and 21:00 UTC
   workflow_dispatch:
-    inputs:
-      direct_push:
-        description: 'Push directly to master instead of raising a PR'
-        type: boolean
-        default: false
 
 jobs:
   poll:
@@ -45,7 +40,6 @@ jobs:
       - name: Commit updated state
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-          DIRECT_PUSH: ${{ github.event.inputs.direct_push }}
         run: |
           git config user.name "github-actions[bot]"
           git config user.email "github-actions[bot]@users.noreply.github.com"
@@ -54,10 +48,9 @@ jobs:
             echo "No changes — skipping"
             exit 0
           fi
-          if [ "$DIRECT_PUSH" = "true" ]; then
-            git commit -m "chore: ticketsync state update [skip ci]"
-            git push origin master
-          else
+
+          if git diff --staged --name-only | grep -q "tickets.csv"; then
+            # New tickets were processed — raise a PR for visibility
             BRANCH="ticketsync/state-$(date +%Y%m%d-%H%M%S)"
             git checkout -b "$BRANCH"
             git commit -m "chore: ticketsync state update"
@@ -67,4 +60,8 @@ jobs:
               --body "Automated CSV and state update from TicketSync poll." \
               --base master \
               --head "$BRANCH"
+          else
+            # Only lastPolledAt changed — push directly, no review needed
+            git commit -m "chore: ticketsync state update [skip ci]"
+            git push origin master
           fi
