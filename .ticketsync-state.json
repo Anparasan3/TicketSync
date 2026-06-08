@@ -1,8 +1,15 @@
 {
-  "lastPolledAt": "2026-05-23T10:37:35Z",
+  "lastPolledAt": "2026-06-08T22:41:45Z",
   "processedKeys": [
     "DEV-2677",
     "DEV-2579",
-    "DEV-2594"
+    "DEV-2594",
+    "DEV-2702",
+    "DEV-2752",
+    "DEV-2745",
+    "DEV-2700",
+    "DEV-2710",
+    "DEV-2695",
+    "DEV-2256"
   ]
 }
