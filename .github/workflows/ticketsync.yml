@@ -38,31 +38,14 @@ jobs:
           EMAIL_TO: ${{ secrets.EMAIL_TO }}
 
       - name: Commit updated state
-        env:
-          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
           git config user.name "github-actions[bot]"
           git config user.email "github-actions[bot]@users.noreply.github.com"
           git checkout master
-          git add .ticketsync-state.json tickets.csv
+          git add .ticketsync-state.json
           if git diff --staged --quiet; then
             echo "No changes — skipping"
             exit 0
           fi
-
-          if git diff --staged --name-only | grep -q "tickets.csv"; then
-            # New tickets were processed — raise a PR for visibility
-            BRANCH="ticketsync/state-$(date +%Y%m%d-%H%M%S)"
-            git checkout -b "$BRANCH"
-            git commit -m "chore: ticketsync state update"
-            git push origin "$BRANCH"
-            gh pr create \
-              --title "chore: ticketsync state update" \
-              --body "Automated CSV and state update from TicketSync poll." \
-              --base master \
-              --head "$BRANCH"
-          else
-            # Only lastPolledAt changed — push directly, no review needed
-            git commit -m "chore: ticketsync state update [skip ci]"
-            git push origin master
-          fi
+          git commit -m "chore: ticketsync state update [skip ci]"
+          git push origin master
