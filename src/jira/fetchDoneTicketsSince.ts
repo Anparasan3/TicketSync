@@ -35,7 +35,7 @@ const searchResponseSchema = z.object({
 export async function fetchDoneTicketsSince(since: Date): Promise<JiraTicket[]> {
   const sinceStr = format(since, "yyyy-MM-dd HH:mm");
 
-  const jql = `project = "${config.JIRA_PROJECT_KEY}" AND status = Done AND statusCategoryChangedDate >= "${sinceStr}" AND assignee = currentUser() ORDER BY updated DESC`;
+  const jql = `project = "${config.JIRA_PROJECT_KEY}" AND status = Done AND statusCategoryChangedDate >= "${sinceStr}" AND (assignee = currentUser() OR reporter = currentUser()) ORDER BY updated DESC`;
 
   const fields = [
     "summary",
@@ -58,6 +58,7 @@ export async function fetchDoneTicketsSince(since: Date): Promise<JiraTicket[]> 
   let nextPageToken: string | undefined;
 
   console.log(`  Fetching Jira tickets with JQL: ${jql}`);
+  console.log(`  Jira search URL: ${config.JIRA_BASE_URL}/issues/?jql=${encodeURIComponent(jql)}`);
 
   while (true) {
     const body: Record<string, unknown> = { jql, fields, maxResults };
